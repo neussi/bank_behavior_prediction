@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %}Scoring Batch (CSV) - BankScore AI{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-6 py-12">
+    <div class="mb-10 space-y-2">
+        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Traitement de Masse</span>
+        <h2 class="text-3xl font-extrabold text-slate-900">Classification de Portefeuille Client</h2>
+        <p class="text-slate-500 text-sm">Téléversez un fichier au format CSV (délimité par un point-virgule) pour classifier instantanément des centaines de prospects bancaires.</p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8">
+        <!-- Upload Card -->
+        <div class="bg-white premium-card p-8">
+            <div class="border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-3xl p-12 transition cursor-pointer flex flex-col items-center justify-center bg-slate-50/20" id="drop-zone">
+                <input type="file" id="csv-input" class="hidden" accept=".csv">
+                <div class="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                    </svg>
+                </div>
+                <span class="text-sm text-slate-700 font-bold mb-1">Faites glisser votre fichier CSV ici</span>
+                <span class="text-xs text-slate-400">ou cliquez pour parcourir vos dossiers</span>
+                <span class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mt-4 px-3 py-1 rounded bg-slate-100 border border-slate-200">Norme : bank-full.csv</span>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loader" class="hidden flex flex-col items-center justify-center py-10 space-y-4">
+                <div class="w-10 h-10 border-4 border-slate-200 border-t-indigo-600 rounded-full animate-spin"></div>
+                <p class="text-xs text-slate-500 font-medium">Analyse et classification du portefeuille en cours...</p>
+            </div>
+
+            <!-- Summary Results -->
+            <div id="batch-summary" class="hidden mt-8 pt-8 border-t border-slate-100">
+                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">Résumé de l'Évaluation</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-slate-50/50 border border-slate-100 rounded-2xl p-6">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Total Analysé</span>
+                        <h4 class="text-3xl font-extrabold text-slate-900" id="summary-total">0</h4>
+                    </div>
+                    <div class="bg-emerald-50/40 border border-emerald-100/50 rounded-2xl p-6">
+                        <span class="text-[10px] font-bold text-emerald-600/80 uppercase tracking-widest block mb-1">Intention d'Achat</span>
+                        <h4 class="text-3xl font-extrabold text-emerald-600" id="summary-yes">0</h4>
+                    </div>
+                    <div class="bg-rose-50/40 border border-rose-100/50 rounded-2xl p-6">
+                        <span class="text-[10px] font-bold text-rose-600/80 uppercase tracking-widest block mb-1">Refus Probable</span>
+                        <h4 class="text-3xl font-extrabold text-rose-600" id="summary-no">0</h4>
+                    </div>
+                </div>
+
+                <!-- Table Preview -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Aperçu des 50 premiers dossiers</h4>
+                    <div class="overflow-x-auto border border-slate-100 rounded-2xl">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50/50 text-slate-500 border-b border-slate-100 font-bold">
+                                    <th class="p-4">ID</th>
+                                    <th class="p-4">Âge</th>
+                                    <th class="p-4">Job</th>
+                                    <th class="p-4">Solde ($)</th>
+                                    <th class="p-4">Durée (sec)</th>
+                                    <th class="p-4">Probabilité</th>
+                                    <th class="p-4">Verdict IA</th>
+                                </tr>
+                            </thead>
+                            <tbody id="preview-tbody" class="divide-y divide-slate-100 text-slate-700 font-medium">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const dropZone = document.getElementById('drop-zone');
+    const csvInput = document.getElementById('csv-input');
+    const loader = document.getElementById('loader');
+    const summary = document.getElementById('batch-summary');
+
+    dropZone.addEventListener('click', () => csvInput.click());
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-indigo-500', 'bg-indigo-50/10'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-indigo-500', 'bg-indigo-50/10'));
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-indigo-500', 'bg-indigo-50/10');
+        if(e.dataTransfer.files.length) handleBatchFile(e.dataTransfer.files[0]);
+    });
+    csvInput.addEventListener('change', () => {
+        if(csvInput.files.length) handleBatchFile(csvInput.files[0]);
+    });
+
+    function handleBatchFile(file) {
+        const formData = new FormData();
+        formData.append('csv_file', file);
+        
+        // Show spinner, hide summary
+        loader.classList.remove('hidden');
+        summary.classList.add('hidden');
+        
+        fetch('{% url "batch_predict" %}', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            loader.classList.add('hidden');
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+            
+            // Populate summary cards
+            document.getElementById('summary-total').innerText = data.total;
+            document.getElementById('summary-yes').innerText = data.yes_count;
+            document.getElementById('summary-no').innerText = data.no_count;
+            
+            // Populate table preview
+            const tbody = document.getElementById('preview-tbody');
+            tbody.innerHTML = '';
+            
+            data.results.forEach((row, i) => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/40 transition';
+                
+                const scorePct = Math.round(row.score * 100);
+                const isYes = row.prediction === 'Oui';
+                const verdictClass = isYes 
+                    ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' 
+                    : 'bg-rose-50 text-rose-600 border border-rose-100';
+                
+                tr.innerHTML = `
+                    <td class="p-4 text-slate-400 font-bold">${i + 1}</td>
+                    <td class="p-4">${row.age || '-'}</td>
+                    <td class="p-4 capitalize">${row.job || '-'}</td>
+                    <td class="p-4">${row.balance !== undefined ? row.balance : '-'}</td>
+                    <td class="p-4">${row.duration !== undefined ? row.duration : '-'}</td>
+                    <td class="p-4 font-bold text-slate-900">${scorePct}%</td>
+                    <td class="p-4">
+                        <span class="inline-block px-2.5 py-1 rounded-full font-bold text-[10px] ${verdictClass}">
+                            ${row.prediction}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            summary.classList.remove('hidden');
+        })
+        .catch(err => {
+            loader.classList.add('hidden');
+            alert("Erreur lors de la classification du fichier.");
+        });
+    }
+</script>
+{% endblock %}

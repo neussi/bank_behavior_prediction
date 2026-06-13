@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %}Technologie IA & Analyses - BankScore AI{% endblock %}
+
+{% block extra_head %}
+<!-- Include MathJax for academic LaTeX formula rendering -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es6/tex-mml-chtml.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-6 py-12">
+    <div class="mb-12 space-y-2">
+        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Modélisation & Métriques</span>
+        <h2 class="text-3xl font-extrabold text-slate-900">Analyses Statistiques et Mathématiques</h2>
+        <p class="text-slate-500 text-sm">Description rigoureuse des modèles, fondements mathématiques et résultats expérimentaux d'entraînement.</p>
+    </div>
+
+    <!-- Math Foundations -->
+    <div class="bg-white premium-card p-8 mb-12 space-y-8">
+        <h3 class="text-base font-bold text-slate-900 uppercase tracking-wider pb-2 border-b border-slate-100">1. Fondations Algorithmiques</h3>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="space-y-3">
+                <span class="px-2.5 py-1 rounded bg-indigo-50 text-indigo-600 text-[10px] font-bold uppercase tracking-wider">Modèle 1</span>
+                <h4 class="text-sm font-bold text-slate-800">Régression Logistique</h4>
+                <p class="text-slate-500 text-xs leading-relaxed">
+                    Modèle probabiliste linéaire estimant la probabilité à posteriori \(P(y=1|X)\) via une fonction sigmoïde :
+                </p>
+                <div class="bg-slate-50 p-4 rounded-xl text-center text-sm font-medium font-mono">
+                    $$P(y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \sum \beta_i X_i)}}$$
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <span class="px-2.5 py-1 rounded bg-purple-50 text-purple-600 text-[10px] font-bold uppercase tracking-wider">Modèle 2</span>
+                <h4 class="text-sm font-bold text-slate-800">Forêt Aléatoire (Random Forest)</h4>
+                <p class="text-slate-500 text-xs leading-relaxed">
+                    Ensemble d'arbres de décision fondé sur le principe de bagging. L'apprentissage sélectionne les splits en minimisant l'impureté de Gini :
+                </p>
+                <div class="bg-slate-50 p-4 rounded-xl text-center text-sm font-medium font-mono">
+                    $$I_G(p) = 1 - \sum_{k=1}^{K} p_k^2$$
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <span class="px-2.5 py-1 rounded bg-violet-50 text-violet-600 text-[10px] font-bold uppercase tracking-wider">Modèle 3</span>
+                <h4 class="text-sm font-bold text-slate-800">Perceptron Multicouche (MLP)</h4>
+                <p class="text-slate-500 text-xs leading-relaxed">
+                    Réseau neuronal profond sous PyTorch. Optimisé via rétropropagation du gradient avec une perte d'entropie croisée binaire :
+                </p>
+                <div class="bg-slate-50 p-4 rounded-xl text-center text-sm font-medium font-mono">
+                    $$\mathcal{L} = -\frac{1}{N} \sum_{i=1}^N \left( y_i \log(\hat{y}_i) + (1-y_i) \log(1-\hat{y}_i) \right)$$
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diagnostic Visualizations -->
+    <div class="bg-white premium-card p-8 mb-12">
+        <h3 class="text-base font-bold text-slate-900 uppercase tracking-wider pb-2 border-b border-slate-100 mb-8">2. Visualisations des Résultats Expérimentaux</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Fig 1 -->
+            <div class="border border-slate-100 rounded-2xl p-4 flex flex-col hover:shadow-md transition">
+                <img src="/static/images/bank_4_correlation.png" alt="Pearson Correlation Matrix" class="w-full h-auto rounded-lg border border-slate-100 object-contain flex-grow" />
+                <h5 class="text-xs font-bold text-slate-850 mt-4">Matrice de Corrélation de Pearson</h5>
+                <p class="text-[11px] text-slate-400 mt-1.5 leading-relaxed">Représente les intercorrélations des variables explicatives pour identifier les redondances et relations de multicolinéarité.</p>
+            </div>
+            <!-- Fig 2 -->
+            <div class="border border-slate-100 rounded-2xl p-4 flex flex-col hover:shadow-md transition">
+                <img src="/static/images/bank_5_roc_curve.png" alt="ROC AUC Curve" class="w-full h-auto rounded-lg border border-slate-100 object-contain flex-grow" />
+                <h5 class="text-xs font-bold text-slate-850 mt-4">Courbe ROC et Aire sous la Courbe (AUC)</h5>
+                <p class="text-[11px] text-slate-400 mt-1.5 leading-relaxed">La courbe ROC-AUC du classifieur d'ensemble (AUC = 0.9008) démontre un excellent taux de vrais positifs par rapport aux faux positifs.</p>
+            </div>
+            <!-- Fig 3 -->
+            <div class="border border-slate-100 rounded-2xl p-4 flex flex-col hover:shadow-md transition">
+                <img src="/static/images/bank_6_confusion_matrix.png" alt="Confusion Matrix" class="w-full h-auto rounded-lg border border-slate-100 object-contain flex-grow" />
+                <h5 class="text-xs font-bold text-slate-850 mt-4">Matrice de Confusion de Test</h5>
+                <p class="text-[11px] text-slate-400 mt-1.5 leading-relaxed">Quantification directe des taux de classification correcte (Vrais Positifs / Négatifs) et d'erreurs de type I et II.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="bg-white premium-card p-8">
+        <h3 class="text-base font-bold text-slate-900 uppercase tracking-wider pb-2 border-b border-slate-100 mb-6">3. Tableau de Comparaison des Algorithmes</h3>
+        <div class="overflow-x-auto border border-slate-100 rounded-2xl">
+            <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                    <tr class="bg-slate-50/50 text-slate-500 border-b border-slate-100 font-bold">
+                        <th class="p-4">Algorithme</th>
+                        <th class="p-4">Exactitude (Accuracy)</th>
+                        <th class="p-4">Précision (Precision)</th>
+                        <th class="p-4">Rappel (Recall)</th>
+                        <th class="p-4">F1-Score</th>
+                        <th class="p-4">Score ROC-AUC</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-700 font-medium">
+                    <tr class="hover:bg-slate-50/40 transition">
+                        <td class="p-4 font-bold text-slate-800">Régression Logistique</td>
+                        <td class="p-4">89.92%</td>
+                        <td class="p-4">60.27%</td>
+                        <td class="p-4">33.58%</td>
+                        <td class="p-4">43.12%</td>
+                        <td class="p-4">0.8931</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/40 transition">
+                        <td class="p-4 font-bold text-slate-800">Random Forest</td>
+                        <td class="p-4">90.49%</td>
+                        <td class="p-4">65.65%</td>
+                        <td class="p-4">37.17%</td>
+                        <td class="p-4">47.45%</td>
+                        <td class="p-4">0.8974</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/40 transition">
+                        <td class="p-4 font-bold text-slate-800">PyTorch MLP</td>
+                        <td class="p-4">89.70%</td>
+                        <td class="p-4">57.28%</td>
+                        <td class="p-4">38.68%</td>
+                        <td class="p-4">46.18%</td>
+                        <td class="p-4">0.8902</td>
+                    </tr>
+                    <tr class="bg-indigo-50/10 font-bold hover:bg-indigo-50/20 transition text-indigo-700">
+                        <td class="p-4 text-indigo-900">Voting Classifier (Ensemble)</td>
+                        <td class="p-4">90.62%</td>
+                        <td class="p-4">65.34%</td>
+                        <td class="p-4">40.00%</td>
+                        <td class="p-4">49.62%</td>
+                        <td class="p-4">0.9008</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

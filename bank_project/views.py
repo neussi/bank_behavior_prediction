@@ -111,14 +111,32 @@ def load_assets():
             model_assets = CustomUnpickler(f).load()
     return model_assets
 
-def index(request):
+def home(request):
     assets = load_assets()
-    options = {}
     metrics = {}
     if assets:
-        options = assets['features']['categorical_options']
         metrics = assets.get('metrics', {})
-    return render(request, 'index.html', {'options': options, 'metrics': metrics})
+    return render(request, 'home.html', {'metrics': metrics})
+
+def predict_view(request):
+    assets = load_assets()
+    options = {}
+    if assets:
+        options = assets['features']['categorical_options']
+    return render(request, 'predict.html', {'options': options})
+
+def batch_view(request):
+    return render(request, 'batch.html')
+
+def analytics_view(request):
+    assets = load_assets()
+    metrics = {}
+    if assets:
+        metrics = assets.get('metrics', {})
+    return render(request, 'analytics.html', {'metrics': metrics})
+
+def contact_view(request):
+    return render(request, 'contact.html')
 
 @csrf_exempt
 def predict(request):
