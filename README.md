@@ -1,10 +1,10 @@
-# 🏦 BankScoreAI - Prédiction du Comportement des Clients Bancaires
+# BankScoreAI - Prédiction du Comportement des Clients Bancaires
 
 **BankScoreAI** est une application web intelligente basée sur Django permettant de prédire l'intention d'achat d'un prospect (souscription à un dépôt à terme) lors de campagnes de marketing direct. Ce projet combine des algorithmes de Machine Learning (Régression Logistique, Forêt Aléatoire, et un Perceptron Multicouche PyTorch) sous forme d'un modèle d'ensemble de vote pondéré pour fournir des scores de propension très précis.
 
 ---
 
-## 🚀 Fonctionnalités Clés
+## Fonctionnalités Clés
 
 1. **Évaluation Individuelle en Temps Réel** : Un formulaire ergonomique complet (données démographiques, statut financier, historique de contact) permettant de calculer instantanément le score de propension d'un client.
 2. **Jauge Interactive & Visualisation** : Affichage dynamique du score de propension via une jauge circulaire interactive en SVG.
@@ -14,7 +14,7 @@
 
 ---
 
-## 🛠️ Stack Technique
+## Stack Technique
 
 - **Framework Web** : Django 6.0+
 - **Frontend** : HTML5, Tailwind CSS, Javascript (Vanilla / Fetch API)
@@ -24,7 +24,7 @@
 
 ---
 
-## 📊 Performances des Modèles
+## Performances des Modèles
 
 Les métriques d'évaluation sur le jeu de données test sont les suivantes :
 
@@ -36,7 +36,7 @@ Les métriques d'évaluation sur le jeu de données test sont les suivantes :
 
 ---
 
-## 📦 Installation et Lancement Local
+## Installation et Lancement Local
 
 ### Prerequisites
 - Python 3.10+
@@ -70,7 +70,7 @@ Accédez à l'application sur [http://localhost:8001/](http://localhost:8001/).
 
 ---
 
-## 📂 Structure du Projet
+## Structure du Projet
 
 ```
 ├── bank_project/           # Configuration globale Django (URLs, settings, WSGI)
