@@ -8,19 +8,17 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from sklearn.base import BaseEstimator, ClassifierMixin
 
-# Mock torch if not available (to avoid ModuleNotFoundError during pickle loading)
-try:
-    import torch
-except ImportError:
-    from unittest.mock import MagicMock
-    mock_torch = MagicMock()
-    mock_torch.nn = MagicMock()
-    mock_torch.nn.Module = object  # Ensure inheritance from object works
-    sys.modules['torch'] = mock_torch
-    sys.modules['torch.nn'] = mock_torch.nn
-    sys.modules['torch.optim'] = MagicMock()
-    sys.modules['torch.utils'] = MagicMock()
-    sys.modules['torch.utils.data'] = MagicMock()
+class DummyTorchObject:
+    def __init__(self, *args, **kwargs):
+        pass
+    def __setstate__(self, state):
+        pass
+    def __reduce__(self):
+        return (DummyTorchObject, ())
+    def __getattr__(self, name):
+        return DummyTorchObject()
+    def __call__(self, *args, **kwargs):
+        return DummyTorchObject()
 
 # Define classes to match the pickled model's references
 class PyTorchMLPClassifier(BaseEstimator, ClassifierMixin):
@@ -39,8 +37,8 @@ class PyTorchMLPClassifier(BaseEstimator, ClassifierMixin):
     def predict_proba(self, X):
         try:
             import torch
-            if isinstance(torch, MagicMock):
-                raise ImportError("torch is mocked")
+            if not hasattr(torch, 'FloatTensor'):
+                raise ImportError("torch is not fully loaded")
             self.model.eval()
             X_tensor = torch.FloatTensor(X)
             with torch.no_grad():
@@ -95,7 +93,12 @@ class CustomUnpickler(pickle.Unpickler):
                 return PyTorchMLPClassifier
             elif name == 'CustomVotingClassifier':
                 return CustomVotingClassifier
-        return super().find_class(module, name)
+        if 'torch' in module or 'torch' in name:
+            return DummyTorchObject
+        try:
+            return super().find_class(module, name)
+        except Exception:
+            return DummyTorchObject
 
 # Load model assets
 ASSETS_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'models', 'bank_model_assets.pkl')
