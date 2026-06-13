@@ -181,5 +181,5 @@ The application is deployed on **Vercel** using the `@vercel/python` runtime wit
 ## Contact
 
 **Institution:** Ecole Nationale Superieure Polytechnique de Yaounde (ENSPY)  
-**Level:** Master 2 - Intelligence Artificielle  
+**Level:** AIA4 - Intelligence Artificielle  
 **Contact:** npe.techs@gmail.com | +237 650 970 526
