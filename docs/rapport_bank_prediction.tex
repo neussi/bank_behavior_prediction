@@ -93,10 +93,10 @@
             \emph{Sous la direction de :}\\
             \textbf{M. Bitha Junior}\\
             Enseignant ENSPY
-        \end{flushright>
+        \end{flushright}
     \end{minipage}\\[2cm]
     
-    \textbf{Code Source (GitHub) :} \href{https://github.com/neussi/bank_behavior_prediction}{github.com/neussi/bank_behavior_prediction}\\[0.2cm]
+    \textbf{Code Source (GitHub) :} \href{https://github.com/neussi/bank_behavior_prediction}{github.com/neussi/bank\_behavior\_prediction}\\[0.2cm]
     \textbf{Déploiement en Production (Vercel) :} \href{https://bank-behavior-prediction.vercel.app}{bank-behavior-prediction.vercel.app}\\[2.5cm]
     
     {\large Année Académique 2025-2026}
@@ -362,7 +362,7 @@ L'application expose trois composants clés :
 
 \subsection{Pipeline de Déploiement Serverless (Vercel)}
 L'environnement sans état de Vercel impose des contraintes de taille de package (limitation à 15MB compressés). Pour y répondre, nous utilisons le gestionnaire d'actifs statiques \textbf{WhiteNoise} qui intercepte et sert les fichiers multimédias et les CSS directement à travers le script de liaison WSGI de Django, configuré via le fichier \texttt{vercel.json} :
-\begin{lstlisting}[language=json, caption=Configuration vercel.json de l'application Bank]
+\begin{lstlisting}[language={}, caption=Configuration vercel.json de l'application Bank]
 {
   "builds": [
     {
