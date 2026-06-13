@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('predict/', views.predict, name='predict'),
     path('batch-predict/', views.batch_predict, name='batch_predict'),
+    path('contact/', views.contact, name='contact'),
 ]

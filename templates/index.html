@@ -3,325 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IA Scoreur Bancaire - Prédiction Comportement Client</title>
+    <title>BankScore AI - Plateforme d'Évaluation Prédictive</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Outfit', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            min-height: 100vh;
+            background-color: #ffffff;
+            color: #0f172a;
         }
-        .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .card-shadow {
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08), 0 2px 8px -1px rgba(15, 23, 42, 0.04);
+            border: 1px solid #f1f5f9;
         }
-        .grad-text {
-            background: linear-gradient(to right, #818cf8, #e0e7ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .header-shadow {
+            border-bottom: 1px solid #e2e8f0;
         }
     </style>
 </head>
-<body class="text-slate-100 flex flex-col min-vh-screen">
+<body class="min-h-screen flex flex-col">
     <!-- Header -->
-    <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <header class="header-shadow bg-white/95 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between py-4">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30">BK</div>
+                <!-- Logo -->
+                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
                 <div>
-                    <h1 class="text-lg font-bold tracking-tight">BankScore<span class="text-indigo-400">AI</span></h1>
-                    <p class="text-xs text-slate-400">Prédiction du comportement client</p>
+                    <h1 class="text-lg font-extrabold tracking-tight text-slate-900">BankScore<span class="text-indigo-600">AI</span></h1>
+                    <p class="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Predictive Customer Analytics</p>
                 </div>
             </div>
-            <nav class="flex gap-6 text-sm">
-                <a href="#predict-tab" class="text-indigo-400 font-medium transition hover:text-indigo-300">Prédiction Simple</a>
-                <a href="#batch-tab" class="text-slate-400 transition hover:text-slate-200">Prédiction Batch</a>
+            <nav class="flex gap-8 text-sm font-semibold text-slate-600">
+                <a href="#predict-section" class="hover:text-indigo-600 transition">Simulateur</a>
+                <a href="#about-section" class="hover:text-indigo-600 transition">Technologie IA</a>
+                <a href="#contact-section" class="hover:text-indigo-600 transition">Contact & Support</a>
             </nav>
         </div>
     </header>
 
-    <main class="flex-grow max-w-7xl w-full mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        <!-- Left Side: Inputs Form (Column span 7) -->
-        <section class="lg:col-span-7 flex flex-col gap-6">
-            <div class="glass-card p-6 rounded-3xl shadow-xl">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-semibold grad-text">Profil du Prospect Bancaire</h2>
-                    <span class="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-medium">Temps Réel</span>
+    <!-- Hero banner -->
+    <div class="bg-gradient-to-br from-indigo-50/60 to-purple-50/40 border-b border-indigo-100/40 py-12 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="max-w-2xl">
+                <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-semibold uppercase tracking-wider">Algorithme d'Ensemble Voting Classifier</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mt-3 mb-4 leading-tight">Prédisez le comportement et l'intention de souscription de vos prospects</h2>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Optimisez vos campagnes marketing en qualifiant instantanément les clients avec une précision globale certifiée de 83.31%. Notre IA analyse les profils démographiques et les interactions pour cibler les meilleurs leads.
+                </p>
+            </div>
+            <div class="w-full md:w-auto flex flex-col gap-3 min-w-[280px]">
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span class="text-xs font-medium text-slate-700">Modèle Actif : <strong>Logistic-RF-MLP</strong></span>
                 </div>
-                
-                <form id="prediction-form" class="space-y-6">
-                    <!-- Section 1: Demographics -->
-                    <div>
-                        <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Données Démographiques</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Âge (ans)</label>
-                                <input type="number" name="age" value="35" min="18" max="100" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
+                    <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="text-xs font-medium text-slate-700">ROC-AUC Certifié : <strong>0.9008</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-6 py-12">
+        
+        <!-- Simulateur Section -->
+        <section id="predict-section" class="scroll-mt-24 mb-16">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900">Simulateur de Scoring</h3>
+                    <p class="text-slate-500 text-xs mt-1">Saisissez les données du prospect bancaire pour évaluer sa probabilité de conversion.</p>
+                </div>
+                <div class="flex gap-4">
+                    <a href="#single-form-box" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-semibold shadow-md shadow-indigo-500/10">Scoring Unitaire</a>
+                    <a href="#batch-box" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition">Traitement Batch (CSV)</a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Form -->
+                <div id="single-form-box" class="lg:col-span-7 bg-white card-shadow p-6 rounded-3xl">
+                    <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6 pb-2 border-b border-slate-100">Données Prospect</h4>
+                    <form id="prediction-form" class="space-y-6">
+                        <!-- Demographics -->
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-4">1. Démographie & Profil</span>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Âge (ans)</label>
+                                    <input type="number" name="age" value="35" min="18" max="100" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Métier / Job</label>
+                                    <select name="job" class="w-full bg-slate-55 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                        {% for opt in options.job %}
+                                        <option value="{{ opt }}" {% if opt == 'management' %}selected{% endif %}>{{ opt|capfirst }}</option>
+                                        {% empty %}
+                                        <option value="management">Management</option>
+                                        <option value="technician">Technicien</option>
+                                        <option value="blue-collar">Ouvrier</option>
+                                        <option value="retired">Retraité</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">État Civil</label>
+                                    <select name="marital" class="w-full bg-slate-55 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                        {% for opt in options.marital %}
+                                        <option value="{{ opt }}" {% if opt == 'married' %}selected{% endif %}>{{ opt|capfirst }}</option>
+                                        {% empty %}
+                                        <option value="married">Marié</option>
+                                        <option value="single">Célibataire</option>
+                                        <option value="divorced">Divorcé</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Niveau d'Éducation</label>
+                                    <select name="education" class="w-full bg-slate-55 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                        {% for opt in options.education %}
+                                        <option value="{{ opt }}" {% if opt == 'secondary' %}selected{% endif %}>{{ opt|capfirst }}</option>
+                                        {% empty %}
+                                        <option value="primary">Primaire</option>
+                                        <option value="secondary">Secondaire</option>
+                                        <option value="tertiary">Tertiaire</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Métier / Job</label>
-                                <select name="job" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                                    {% for opt in options.job %}
-                                    <option value="{{ opt }}" {% if opt == 'management' %}selected{% endif %}>{{ opt|capfirst }}</option>
-                                    {% empty %}
-                                    <option value="management">Management</option>
-                                    <option value="technician">Technicien</option>
-                                    <option value="blue-collar">Ouvrier</option>
-                                    <option value="retired">Retraité</option>
-                                    {% endfor %}
-                                </select>
+                        </div>
+
+                        <!-- Financials -->
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-4">2. Statut Financier</span>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Solde Annuel Moyen ($)</label>
+                                    <input type="number" name="balance" value="1500" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Prêt Logement ?</label>
+                                    <select name="housing" class="w-full bg-slate-55 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                        <option value="no">Non</option>
+                                        <option value="yes">Oui</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Prêt Personnel ?</label>
+                                    <select name="loan" class="w-full bg-slate-55 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                        <option value="no">Non</option>
+                                        <option value="yes">Oui</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">État Civil</label>
-                                <select name="marital" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                                    {% for opt in options.marital %}
-                                    <option value="{{ opt }}" {% if opt == 'married' %}selected{% endif %}>{{ opt|capfirst }}</option>
-                                    {% empty %}
-                                    <option value="married">Marié</option>
-                                    <option value="single">Célibataire</option>
-                                    <option value="divorced">Divorcé</option>
-                                    {% endfor %}
-                                </select>
+                        </div>
+
+                        <!-- Contact Campaign -->
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-4">3. Interactions Historiques</span>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Moyen de Contact</label>
+                                    <select name="contact" class="w-full bg-slate-55 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                        {% for opt in options.contact %}
+                                        <option value="{{ opt }}" {% if opt == 'cellular' %}selected{% endif %}>{{ opt|capfirst }}</option>
+                                        {% empty %}
+                                        <option value="cellular">Téléphone portable</option>
+                                        <option value="telephone">Téléphone fixe</option>
+                                        <option value="unknown">Inconnu</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Mois de contact</label>
+                                    <select name="month" class="w-full bg-slate-55 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                        {% for opt in options.month %}
+                                        <option value="{{ opt }}" {% if opt == 'may' %}selected{% endif %}>{{ opt|upper }}</option>
+                                        {% empty %}
+                                        <option value="may">Mai</option>
+                                        <option value="jul">Juillet</option>
+                                        <option value="aug">Août</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Jour du Mois</label>
+                                    <input type="number" name="day" value="15" min="1" max="31" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Durée d'Appel (sec)</label>
+                                    <input type="number" name="duration" value="250" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Nb de Contacts Campagne</label>
+                                    <input type="number" name="campaign" value="1" min="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Jours Écoulés (pdays)</label>
+                                    <input type="number" name="pdays" value="-1" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Contacts Précédents</label>
+                                    <input type="number" name="previous" value="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Issue Campagne Précédente</label>
+                                    <select name="poutcome" class="w-full bg-slate-55 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                        {% for opt in options.poutcome %}
+                                        <option value="{{ opt }}" {% if opt == 'unknown' %}selected{% endif %}>{{ opt|capfirst }}</option>
+                                        {% empty %}
+                                        <option value="unknown">Inconnu</option>
+                                        <option value="success">Succès</option>
+                                        <option value="failure">Échec</option>
+                                        <option value="other">Autre</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Défaut de Paiement ?</label>
+                                    <select name="default" class="w-full bg-slate-55 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white transition text-slate-900 font-medium text-sm">
+                                        <option value="no">Non</option>
+                                        <option value="yes">Oui</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Niveau d'Éducation</label>
-                                <select name="education" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                                    {% for opt in options.education %}
-                                    <option value="{{ opt }}" {% if opt == 'secondary' %}selected{% endif %}>{{ opt|capfirst }}</option>
-                                    {% empty %}
-                                    <option value="primary">Primaire</option>
-                                    <option value="secondary">Secondaire</option>
-                                    <option value="tertiary">Tertiaire</option>
-                                    {% endfor %}
-                                </select>
+                        </div>
+
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-6 rounded-xl transition shadow-lg shadow-indigo-500/10 active:scale-[0.98]">
+                            Calculer le Score de Conversion
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right results Column -->
+                <div class="lg:col-span-5 flex flex-col gap-6">
+                    <!-- Gauge Result -->
+                    <div class="bg-white card-shadow p-6 rounded-3xl flex flex-col items-center justify-center text-center">
+                        <h4 class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-6">Probabilité de Souscription</h4>
+                        <div class="relative w-44 h-44 flex items-center justify-center mb-4">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="40" stroke="#f1f5f9" stroke-width="8" fill="transparent"/>
+                                <circle id="score-ring" cx="50" cy="50" r="40" stroke="#4f46e5" stroke-width="8" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="251.2" stroke-linecap="round"/>
+                            </svg>
+                            <div class="absolute flex flex-col items-center">
+                                <span id="score-pct" class="text-4xl font-extrabold text-slate-950">0%</span>
+                                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1">Confiance IA</span>
                             </div>
+                        </div>
+                        <div id="result-status" class="hidden text-center mt-2">
+                            <p class="text-slate-500 text-xs font-semibold">Décision Recommandée :</p>
+                            <span id="result-label" class="inline-block px-4 py-1.5 rounded-full font-bold text-xs mt-2"></span>
                         </div>
                     </div>
 
-                    <!-- Section 2: Financial & Credit Status -->
-                    <div>
-                        <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Statut Financier</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Solde Annuel Moyen ($)</label>
-                                <input type="number" name="balance" value="1500" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Prêt Immobilier ?</label>
-                                <select name="housing" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                                    <option value="no">Non</option>
-                                    <option value="yes">Oui</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Prêt Personnel ?</label>
-                                <select name="loan" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                                    <option value="no">Non</option>
-                                    <option value="yes">Oui</option>
-                                </select>
-                            </div>
+                    <!-- Breakdown -->
+                    <div class="bg-white card-shadow p-6 rounded-3xl">
+                        <h4 class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-4">Résultats des Modèles Individuels</h4>
+                        <div class="h-44">
+                            <canvas id="modelChart"></canvas>
                         </div>
                     </div>
 
-                    <!-- Section 3: Interaction History -->
-                    <div>
-                        <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Dernière Campagne de Contact</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Moyen de Contact</label>
-                                <select name="contact" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                                    {% for opt in options.contact %}
-                                    <option value="{{ opt }}" {% if opt == 'cellular' %}selected{% endif %}>{{ opt|capfirst }}</option>
-                                    {% empty %}
-                                    <option value="cellular">Téléphone portable</option>
-                                    <option value="telephone">Téléphone fixe</option>
-                                    <option value="unknown">Inconnu</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Mois</label>
-                                <select name="month" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                                    {% for opt in options.month %}
-                                    <option value="{{ opt }}" {% if opt == 'may' %}selected{% endif %}>{{ opt|upper }}</option>
-                                    {% empty %}
-                                    <option value="may">Mai</option>
-                                    <option value="jul">Juillet</option>
-                                    <option value="aug">Août</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Jour du Mois</label>
-                                <input type="number" name="day" value="15" min="1" max="31" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Durée Appel (sec)</label>
-                                <input type="number" name="duration" value="250" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Contacts Campagne</label>
-                                <input type="number" name="campaign" value="1" min="1" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Jours Écoulés (pdays)</label>
-                                <input type="number" name="pdays" value="-1" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Contacts Précédents</label>
-                                <input type="number" name="previous" value="0" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Issue Campagne Préc.</label>
-                                <select name="poutcome" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                                    {% for opt in options.poutcome %}
-                                    <option value="{{ opt }}" {% if opt == 'unknown' %}selected{% endif %}>{{ opt|capfirst }}</option>
-                                    {% empty %}
-                                    <option value="unknown">Inconnu</option>
-                                    <option value="success">Succès</option>
-                                    <option value="failure">Échec</option>
-                                    <option value="other">Autre</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1.5 font-medium">Défaut de Paiement ?</label>
-                                <select name="default" class="w-full bg-slate-950/60 border border-slate-700/60 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 transition text-slate-100">
-                                    <option value="no">Non</option>
-                                    <option value="yes">Oui</option>
-                                </select>
+                    <!-- Batch -->
+                    <div id="batch-box" class="bg-white card-shadow p-6 rounded-3xl">
+                        <h4 class="text-sm font-bold text-slate-900 mb-2">Évaluation Multi-Prospects (CSV)</h4>
+                        <p class="text-xs text-slate-500 mb-4">Téléversez un fichier au format CSV (délimité par un point-virgule) pour évaluer un portefeuille complet de clients.</p>
+                        <div class="border-2 border-dashed border-slate-200 rounded-2xl p-6 hover:border-indigo-500 transition cursor-pointer flex flex-col items-center justify-center bg-slate-50/50" id="drop-zone">
+                            <input type="file" id="csv-input" class="hidden" accept=".csv">
+                            <svg class="w-10 h-10 text-indigo-500/80 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                            <span class="text-xs text-slate-700 font-semibold">Déposez votre CSV ou cliquez pour explorer</span>
+                            <span class="text-[9px] text-slate-400 mt-1">Norme standard bank-full.csv</span>
+                        </div>
+                        <div id="batch-result" class="hidden mt-4 pt-4 border-t border-slate-100 space-y-3">
+                            <div class="flex justify-between text-xs font-bold text-slate-700">
+                                <span>Total Traité : <strong id="batch-total" class="text-slate-900">0</strong></span>
+                                <span class="text-emerald-600">Achat probable : <strong id="batch-yes">0</strong></span>
+                                <span class="text-rose-600">Refus probable : <strong id="batch-no">0</strong></span>
                             </div>
                         </div>
                     </div>
-
-                    <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold py-3.5 px-6 rounded-xl transition shadow-lg shadow-indigo-500/20 active:scale-[0.98]">
-                        Estimer l'Intention d'Achat du Client
-                    </button>
-                </form>
+                </div>
             </div>
         </section>
 
-        <!-- Right Side: Results Display (Column span 5) -->
-        <section class="lg:col-span-5 flex flex-col gap-6">
-            
-            <!-- Prediction Indicator Card -->
-            <div class="glass-card p-6 rounded-3xl shadow-xl flex flex-col items-center justify-center text-center relative overflow-hidden">
-                <div class="absolute -right-16 -top-16 w-36 h-36 bg-indigo-500/10 rounded-full blur-2xl"></div>
-                <h2 class="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-6">Score de Propension à la Souscription</h2>
-                
-                <!-- Circular/Semi-circular score chart placeholder -->
-                <div class="relative w-40 h-40 flex items-center justify-center mb-4">
-                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="40" stroke="#1e293b" stroke-width="8" fill="transparent"/>
-                        <circle id="score-ring" cx="50" cy="50" r="40" stroke="url(#indigoGrad)" stroke-width="8" fill="transparent"
-                                stroke-dasharray="251.2" stroke-dashoffset="251.2" stroke-linecap="round"/>
-                        <defs>
-                            <linearGradient id="indigoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#6366f1" />
-                                <stop offset="100%" stop-color="#a855f7" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                    <div class="absolute flex flex-col items-center">
-                        <span id="score-pct" class="text-4xl font-extrabold text-white">0%</span>
-                        <span class="text-xs text-slate-400">Score IA</span>
+        <!-- Technologie IA Section -->
+        <section id="about-section" class="scroll-mt-24 mb-16 border-t border-slate-100 pt-16">
+            <div class="max-w-3xl mb-8">
+                <span class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold uppercase tracking-wider">Architecture du Système</span>
+                <h3 class="text-2xl font-bold text-slate-900 mt-3">Rapports & Fondements Mathématiques</h3>
+                <p class="text-slate-600 text-sm leading-relaxed mt-2">
+                    L'application s'appuie sur le dataset marketing bancaire UCI composé de 45 211 profils. Les visualisations ci-dessous représentent l'évaluation statistique issue du processus d'entraînement.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Fig 1 -->
+                <div class="bg-white card-shadow rounded-2xl p-4">
+                    <img src="/static/images/bank_4_correlation.png" alt="Corrélation" class="w-full h-auto rounded-lg border border-slate-100 object-cover" />
+                    <h5 class="text-xs font-bold text-slate-800 mt-3">Analyse des Corrélations</h5>
+                    <p class="text-[11px] text-slate-500 mt-1">Matrice de corrélation linéaire de Pearson entre les attributs financiers et démographiques.</p>
+                </div>
+                <!-- Fig 2 -->
+                <div class="bg-white card-shadow rounded-2xl p-4">
+                    <img src="/static/images/bank_5_roc_curve.png" alt="Courbe ROC-AUC" class="w-full h-auto rounded-lg border border-slate-100 object-cover" />
+                    <h5 class="text-xs font-bold text-slate-800 mt-3">Courbe de Performance ROC</h5>
+                    <p class="text-[11px] text-slate-500 mt-1">L'aire sous la courbe (AUC = 0.90) démontre l'excellence de notre classifieur d'ensemble.</p>
+                </div>
+                <!-- Fig 3 -->
+                <div class="bg-white card-shadow rounded-2xl p-4">
+                    <img src="/static/images/bank_6_confusion_matrix.png" alt="Matrice de Confusion" class="w-full h-auto rounded-lg border border-slate-100 object-cover" />
+                    <h5 class="text-xs font-bold text-slate-800 mt-3">Matrice de Confusion</h5>
+                    <p class="text-[11px] text-slate-500 mt-1">Permet de quantifier la précision et le taux de faux positifs pour équilibrer le rappel.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact-section" class="scroll-mt-24 border-t border-slate-100 pt-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Info -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold uppercase tracking-wider">Support local</span>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-3">Nous contacter</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mt-2">
+                            Pour toute demande de support technique ou intégration industrielle en entreprise, notre équipe se tient disponible.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            </div>
+                            <div>
+                                <h5 class="text-xs font-bold text-slate-800">Support Téléphone</h5>
+                                <p class="text-sm font-semibold text-slate-600">Aoudou, +237 650970526</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            </div>
+                            <div>
+                                <h5 class="text-xs font-bold text-slate-800">Messagerie SMTP</h5>
+                                <p class="text-sm font-semibold text-slate-600">npe.techs@gmail.com</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div id="result-status" class="hidden text-center mt-2">
-                    <p class="text-slate-300 text-sm">Décision Recommandée :</p>
-                    <span id="result-label" class="inline-block px-4 py-1.5 rounded-full font-bold text-sm mt-2"></span>
-                </div>
-            </div>
-
-            <!-- Ensemble breakdown chart -->
-            <div class="glass-card p-6 rounded-3xl shadow-xl">
-                <h2 class="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-4">Prédictions par Modèle</h2>
-                <div class="h-44 flex items-center justify-center">
-                    <canvas id="modelChart"></canvas>
-                </div>
-            </div>
-
-            <!-- Batch upload box -->
-            <div id="batch-tab" class="glass-card p-6 rounded-3xl shadow-xl">
-                <h2 class="text-xl font-semibold grad-text mb-4">Évaluation par Batch (Fichier CSV)</h2>
-                <p class="text-xs text-slate-400 mb-4">Chargez un fichier CSV structuré avec des séparateurs point-virgule (;) pour classifier des profils de clients en masse.</p>
-                <div class="border-2 border-dashed border-slate-700/80 rounded-2xl p-6 hover:border-indigo-500/50 transition cursor-pointer flex flex-col items-center justify-center bg-slate-900/20" id="drop-zone">
-                    <input type="file" id="csv-input" class="hidden" accept=".csv">
-                    <svg class="w-10 h-10 text-indigo-400/80 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                    <span class="text-xs text-slate-300 font-medium">Glissez un fichier CSV ou cliquez ici</span>
-                    <span class="text-[10px] text-slate-500 mt-1">Format standard bank.csv</span>
-                </div>
-                <div id="batch-result" class="hidden mt-4 pt-4 border-t border-slate-800 space-y-3">
-                    <div class="flex justify-between text-xs">
-                        <span>Total Analysé : <strong id="batch-total">0</strong></span>
-                        <span class="text-emerald-400">Intention Achat (Oui) : <strong id="batch-yes">0</strong></span>
-                        <span class="text-rose-400">Rejet (Non) : <strong id="batch-no">0</strong></span>
-                    </div>
+                <!-- Contact Form -->
+                <div class="lg:col-span-7 bg-white card-shadow p-6 rounded-3xl">
+                    <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">Envoyer un message</h4>
+                    <form id="contact-form" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Nom complet</label>
+                                <input type="text" name="name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Adresse Email</label>
+                                <input type="email" name="email" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white text-sm">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Objet</label>
+                            <input type="text" name="subject" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-600 mb-1.5 font-semibold">Votre message</label>
+                            <textarea name="message" rows="4" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:bg-white text-sm"></textarea>
+                        </div>
+                        <div id="contact-alert" class="hidden text-xs py-2 px-3 rounded-lg font-semibold"></div>
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-md shadow-indigo-500/10">
+                            Envoyer le message
+                        </button>
+                    </form>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800/80 bg-slate-950 py-6 mt-12 text-center text-xs text-slate-500">
-        <p>© 2026 ENSPY - Projet IA4 - Prédiction de Comportement Client</p>
+    <footer class="border-t border-slate-100 bg-slate-50 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p>© 2026 ENSPY - Projet IA4 - Évaluation du comportement client. Tous droits réservés.</p>
+            <p>Support technique : <strong>Aoudou (+237 650970526)</strong></p>
+        </div>
     </footer>
 
     <!-- Chart and Logic script -->
     <script>
         let chart = null;
 
-        // Initialize empty radar/bar chart
         function initChart(lr = 0, rf = 0, mlp = 0) {
             const ctx = document.getElementById('modelChart').getContext('2d');
-            
-            if(chart) {
-                chart.destroy();
-            }
-
+            if(chart) chart.destroy();
             chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Régression Log.', 'Random Forest', 'Neural Network (MLP)'],
+                    labels: ['Régression Log.', 'Random Forest', 'Réseau de Neurones (MLP)'],
                     datasets: [{
-                        label: 'Probabilité de conversion (%)',
+                        label: 'Probabilité (%)',
                         data: [lr * 100, rf * 100, mlp * 100],
-                        backgroundColor: [
-                            'rgba(99, 102, 241, 0.7)',
-                            'rgba(168, 85, 247, 0.7)',
-                            'rgba(236, 72, 153, 0.7)'
-                        ],
-                        borderColor: [
-                            '#6366f1',
-                            '#a855f7',
-                            '#ec4899'
-                        ],
-                        borderWidth: 1.5,
-                        borderRadius: 8
+                        backgroundColor: ['#6366f1', '#818cf8', '#a855f7'],
+                        borderWidth: 0,
+                        borderRadius: 6
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
+                    plugins: { legend: { display: false } },
                     scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            grid: { color: 'rgba(255,255,255,0.05)' },
-                            ticks: { color: '#94a3b8' }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: '#94a3b8' }
-                        }
+                        y: { beginAtZero: true, max: 100, grid: { color: '#f1f5f9' }, ticks: { color: '#64748b' } },
+                        x: { grid: { display: false }, ticks: { color: '#64748b' } }
                     }
                 }
             });
@@ -332,9 +433,7 @@
         // Single Predict Submit
         document.getElementById('prediction-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const formData = new FormData(this);
-            
             fetch('/predict/', {
                 method: 'POST',
                 body: formData
@@ -345,67 +444,46 @@
                     alert(data.error);
                     return;
                 }
-                
-                // Update score circle
                 const pct = Math.round(data.probability * 100);
                 document.getElementById('score-pct').innerText = pct + '%';
-                
                 const ring = document.getElementById('score-ring');
                 const circ = 2 * Math.PI * 40;
-                const offset = circ - (data.probability * circ);
-                ring.style.strokeDashoffset = offset;
+                ring.style.strokeDashoffset = circ - (data.probability * circ);
                 
-                // Show recommendation status
                 const statusDiv = document.getElementById('result-status');
                 const label = document.getElementById('result-label');
                 statusDiv.classList.remove('hidden');
                 
                 if (data.prediction === 'Oui') {
-                    label.innerText = 'Prospect Très Probable (Oui)';
-                    label.className = 'inline-block px-4 py-1.5 rounded-full font-bold text-xs mt-2 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+                    label.innerText = 'Intention d\'Achat (OUI)';
+                    label.className = 'inline-block px-4 py-1.5 rounded-full font-bold text-xs mt-2 bg-emerald-50 text-emerald-600 border border-emerald-200';
                 } else {
-                    label.innerText = 'Prospect Faible (Non)';
-                    label.className = 'inline-block px-4 py-1.5 rounded-full font-bold text-xs mt-2 bg-rose-500/20 text-rose-400 border border-rose-500/30';
+                    label.innerText = 'Refus Probable (NON)';
+                    label.className = 'inline-block px-4 py-1.5 rounded-full font-bold text-xs mt-2 bg-rose-50 text-rose-600 border border-rose-200';
                 }
-                
-                // Update chart
                 initChart(data.breakdown.lr, data.breakdown.rf, data.breakdown.mlp);
             })
-            .catch(err => {
-                console.error("Error:", err);
-                alert("Une erreur s'est produite lors de la prédiction.");
-            });
+            .catch(err => alert("Erreur lors du calcul du score."));
         });
 
-        // Batch upload logic
+        // Batch upload
         const dropZone = document.getElementById('drop-zone');
         const csvInput = document.getElementById('csv-input');
-        
         dropZone.addEventListener('click', () => csvInput.click());
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('border-indigo-500');
-        });
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('border-indigo-500');
-        });
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-indigo-500'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-indigo-500'));
         dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
             dropZone.classList.remove('border-indigo-500');
-            if(e.dataTransfer.files.length) {
-                handleBatchFile(e.dataTransfer.files[0]);
-            }
+            if(e.dataTransfer.files.length) handleBatchFile(e.dataTransfer.files[0]);
         });
         csvInput.addEventListener('change', () => {
-            if(csvInput.files.length) {
-                handleBatchFile(csvInput.files[0]);
-            }
+            if(csvInput.files.length) handleBatchFile(csvInput.files[0]);
         });
 
         function handleBatchFile(file) {
             const formData = new FormData();
             formData.append('csv_file', file);
-            
             fetch('/batch-predict/', {
                 method: 'POST',
                 body: formData
@@ -416,17 +494,43 @@
                     alert(data.error);
                     return;
                 }
-                
                 document.getElementById('batch-result').classList.remove('hidden');
                 document.getElementById('batch-total').innerText = data.total;
                 document.getElementById('batch-yes').innerText = data.yes_count;
                 document.getElementById('batch-no').innerText = data.no_count;
             })
-            .catch(err => {
-                console.error("Error:", err);
-                alert("Erreur lors de la classification du fichier.");
-            });
+            .catch(err => alert("Erreur lors de la classification du fichier."));
         }
+
+        // Contact Form SMTP AJAX
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const alertDiv = document.getElementById('contact-alert');
+            alertDiv.classList.remove('hidden', 'bg-rose-50', 'text-rose-600', 'bg-emerald-50', 'text-emerald-600');
+            alertDiv.innerText = "Envoi du message en cours...";
+            alertDiv.className = "text-xs py-2 px-3 rounded-lg font-semibold bg-slate-50 text-slate-600 mb-3";
+
+            fetch('/contact/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alertDiv.innerText = "Votre message a été transmis avec succès via SMTP.";
+                    alertDiv.className = "text-xs py-2 px-3 rounded-lg font-semibold bg-emerald-50 text-emerald-600 mb-3";
+                    document.getElementById('contact-form').reset();
+                } else {
+                    alertDiv.innerText = "Erreur : " + data.error;
+                    alertDiv.className = "text-xs py-2 px-3 rounded-lg font-semibold bg-rose-50 text-rose-600 mb-3";
+                }
+            })
+            .catch(err => {
+                alertDiv.innerText = "Erreur réseau lors de la transmission.";
+                alertDiv.className = "text-xs py-2 px-3 rounded-lg font-semibold bg-rose-50 text-rose-600 mb-3";
+            });
+        });
     </script>
 </body>
 </html>
